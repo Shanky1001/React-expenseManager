@@ -27,13 +27,45 @@ const Main = () => {
             setBalance(bal);
             var obj = { inp, notes };
             setArr([...arr, obj]);
+            var li = document.createElement("li");
+            li.innerHTML = `<span>${inp}</span><div>${notes}</div>`;
+            document.querySelector("#historyList").appendChild(li);
+
         }
     }
     const addExpense = (e) => {
         e.preventDefault();
-        const inp = document.querySelector("#moneyExpense").value;
+        const inp = Number(document.querySelector("#moneyExpense").value);
         const category = document.querySelector("#category :checked").value;
         const note = document.querySelector("#noteExpense").value;
+        if (inp == "" || category === "") {
+            document.querySelector("#warning").innerHTML = "Enter both money and category.";
+            document.querySelector("#warning").style = "color:red";
+
+        } else {
+            var li = document.createElement("li");
+            if (category === "grocery") {
+                li.innerHTML = `<div> <span><img src="https://cdn-icons-png.flaticon.com/512/3724/3724720.png"/></span> <span>${inp}</span> <i class="fa-solid fa-pen" onClick={edit}></i><i class="fa-solid fa-trash-can"   onClick={delete}></i> </div> <div>Note : ${note}</div>`;
+                document.querySelector("#historyList").appendChild(li);
+            }
+            if (category === "veggies") {
+                li.innerHTML = `<div> <span><img src="https://icon-library.com/images/veggie-icon/veggie-icon-4.jpg"/></span> <span>${inp}</span> <i class="fa-solid fa-pen" onClick={edit}></i> <i class="fa-solid fa-trash-can" onClick={delete}></i> </div> <div>Note : ${note}</div>`;
+                document.querySelector("#historyList").appendChild(li);
+            }
+            if (category === "travelling") {
+                li.innerHTML = `<div> <span><img src="https://i.pinimg.com/originals/f2/f9/ee/f2f9eef9a4ba0112e098b8a3b400c41c.png"/></span> <span>${inp}</span><i class="fa-solid fa-pen" onClick={edit}></i> <i class="fa-solid fa-trash-can"   onClick={delete}></i> </div> <div>Note : ${note}</div>`;
+                document.querySelector("#historyList").appendChild(li);
+            }
+            if (category === "misc") {
+                li.innerHTML = `<div> <span><img src="https://cdn-icons-png.flaticon.com/512/2644/2644379.png"/></span> <span>${inp}</span> <i class="fa-solid fa-pen" onClick={edit}></i> <i class="fa-solid fa-trash-can"   onClick={delete}></i> </div> <div>Note : ${note}</div>`;
+                document.querySelector("#historyList").appendChild(li);
+            }
+        }
+    }
+    const edit = (e) => {
+
+    }
+    const del = (e) => {
 
     }
 
@@ -43,7 +75,7 @@ const Main = () => {
                 <div id="balanceContainer"><h3> Your Balance</h3>
                     <p id="balance"><h6> ₹ </h6><h5>{balance}</h5></p>
                 </div>
-                <div id="historyContainer"><h4>All Expenses</h4><ul id="historyList">{arr.map(val => { return <li>{val.inp}  {val.notes}</li> })}</ul></div>
+                <div id="historyContainer"><h4>All Expenses</h4><ul id="historyList"></ul></div>
                 <div id="add"><h1 id="addExpense" onClick={expenseContainer}> Add Expense</h1><h1 id="addMoney" onClick={moneyContainer}>Add Money </h1></div>
 
                 <div id="formContainer">

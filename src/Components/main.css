@@ -10,7 +10,7 @@
 }
 
 #container {
-    width: 35%;
+    width: 70%;
     margin: auto;
     min-height: 100vh;
     background-color: white;
@@ -38,7 +38,8 @@
     padding: .5rem 1rem;
     overflow-y: scroll;
 }
-#add{
+
+#add {
     display: flex;
     flex: 50%;
 }
@@ -52,12 +53,13 @@
     text-align: center;
     height: 10%;
     right: 0;
-    padding-top:1.3rem ;
+    padding-top: 3%;
     text-align: center;
     border-radius: 15px;
     font-size: 1.5rem;
     cursor: pointer;
 }
+
 #add #addExpense {
     position: absolute;
     background-color: #000000;
@@ -67,7 +69,7 @@
     text-align: center;
     height: 10%;
     left: 0;
-    padding-top:1.3rem;
+    padding-top: 3%;
     text-align: center;
     border-radius: 15px;
     font-size: 1.5rem;
@@ -87,7 +89,7 @@
     border-radius: 15px;
 }
 
-#addMoneyContainer{
+#addMoneyContainer {
     display: none;
     width: 100%;
     position: absolute;
@@ -153,7 +155,7 @@
 }
 
 .form div input,
-select{
+select {
     width: 80%;
     height: 2.5rem;
     margin: 1rem;
@@ -168,12 +170,44 @@ select{
     font-weight: 700;
     cursor: pointer;
 }
-.btn{
+
+.btn {
     width: 80%;
     height: 2.5rem;
     margin: 1rem;
     border-radius: 5px;
     font-size: 1.3rem;
     padding: 0 1rem;
-    cursor: pointer; 
+    cursor: pointer;
+}
+
+/* History List */
+#history{
+    padding: 0;
+    margin: 0;
+}
+#historyList li{
+    width: 90%;
+    margin: .8rem auto ;
+    font-size: 2.5rem;
+    border-radius: 8px;
+    padding-right: 5px;
+}
+
+#historyList li div{
+    padding: .5rem 0;
+    color: black;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+#historyList li img{
+    width: 40px;
+    margin-right: 1rem;
+}
+#historyList li .fa-pen:hover{
+    color: dodgerblue;
+}
+#historyList li .fa-trash-can:hover{
+   color: red;
 }
