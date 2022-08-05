@@ -7,10 +7,11 @@
     list-style-type: none;
     box-sizing: border-box;
     font-family: 'Roboto', sans-serif;
+    border-collapse: collapse;
 }
 
 #container {
-    width: 70%;
+    width: 50%;
     margin: auto;
     min-height: 100vh;
     background-color: white;
@@ -34,9 +35,9 @@
     top: 20vh;
     width: 100%;
     font-size: 16px;
-    min-height: 75vh;
+    min-height: 76vh;
     padding: .5rem 1rem;
-    overflow-y: scroll;
+    border-radius: 10px; 
 }
 
 #add {
@@ -59,12 +60,15 @@
     font-size: 1.5rem;
     cursor: pointer;
 }
+#add #addMoney:hover{
+    background-color: green;
+}
 
 #add #addExpense {
     position: absolute;
     background-color: #000000;
     color: white;
-    bottom: 0;
+    bottom: 0%;
     width: 50%;
     text-align: center;
     height: 10%;
@@ -75,32 +79,38 @@
     font-size: 1.5rem;
     cursor: pointer;
 }
+#add #addExpense:hover{
+    background-color: red;
+}
 
 #formContainer {
     display: none;
     width: 100%;
     position: absolute;
     z-index: 100;
-    top: 30%;
-    bottom: 0;
+    top: 5%;
+    bottom: 30%;
     background-color: black;
     color: white;
     text-align: center;
     border-radius: 15px;
 }
 
+
 #addMoneyContainer {
     display: none;
     width: 100%;
     position: absolute;
     z-index: 100;
-    top: 40%;
-    bottom: 0;
+    top: 5%;
+    bottom: 30%;
     background-color: black;
     color: white;
     text-align: center;
     border-radius: 15px;
 }
+
+
 
 /* Balance Section */
 #balance {
@@ -113,7 +123,7 @@
     margin-top: 3%;
     display: flex;
     align-items: center;
-    box-shadow: 0px 0px 32px 3px rgba(0, 0, 0, 0.59);
+    box-shadow: 0px 0px 32px 3px rgba(207, 118, 118, 0.59);
 }
 
 #balance h6 {
@@ -127,22 +137,13 @@
     font-size: 2.5rem;
 }
 
-/* History Section */
-#historylist {
-    width: 95%;
-    margin: auto;
-    min-height: 96%;
-    border: 1px solid black;
-}
-
-
 /* Form for Adding */
 
 .fa-xmark {
     position: absolute;
     right: 3%;
     top: 3%;
-    font-size: 1.5rem;
+    font-size: 3rem;
     cursor: pointer;
 }
 
@@ -157,57 +158,121 @@
 .form div input,
 select {
     width: 80%;
-    height: 2.5rem;
+    height: 3.5rem;
     margin: 1rem;
     border-radius: 5px;
-    font-size: 1.3rem;
-    padding: 0 1rem;
+    font-size: 1.8rem;
+    padding: .5rem 1rem;
 }
 
 .form button {
     border-radius: 15px;
-    background-color: white;
+    background-color: rgb(8, 8, 8);
+    font-size: 2rem;
+    box-shadow: 10px 10px 111px -9px rgba(255,255,255,0.77);
     font-weight: 700;
     cursor: pointer;
+}
+.form button:hover{
+    background-color: white;
 }
 
 .btn {
     width: 80%;
-    height: 2.5rem;
+    height: 4rem;
     margin: 1rem;
+    color: white;
     border-radius: 5px;
-    font-size: 1.3rem;
-    padding: 0 1rem;
+    font-size: 1.5rem;
+    padding: .5rem 1rem;
     cursor: pointer;
 }
 
-/* History List */
-#history{
-    padding: 0;
-    margin: 0;
-}
-#historyList li{
+/*    Cards for Display       */
+
+.cards{
     width: 90%;
-    margin: .8rem auto ;
-    font-size: 2.5rem;
-    border-radius: 8px;
-    padding-right: 5px;
+    margin: auto;
+    border: 1px solid;
+    border-radius: 15px;
+    margin-top: .5rem;
+    box-shadow: 0px 0px 37px 15px rgba(209, 204, 204, 0.86);
+    cursor: pointer;
+}
+.cards:hover{
+    transform: scale(1.04);
+}
+.cards h1{
+    padding: 1rem 4rem;
+    font-size: 2rem;
+    font-weight: 700;
+}
+.cards h1 img{
+    width: 8vh;
+    max-height: 8vh;
+    margin-right: 1.5rem;
 }
 
-#historyList li div{
-    padding: .5rem 0;
-    color: black;
+/* Detail Container */
+#detailContainer{
+display: none;
+position: absolute;
+z-index: 20;
+top: 2%;
+left: 5%;
+width: 90%;
+margin: auto;
+min-height: 50vh;
+max-height: 90vh;
+overflow-y: scroll;
+background-color: #000000;
+color: white;
+border-radius: 15px;
+}
+#detailContainer::-webkit-scrollbar { 
+    display: none;  
+}
+#detailContainer h1{
+    color: white;
+    text-align: center;
+    margin-top: 2vh;
+}
+
+
+/* Custom list */
+
+#display{
+    margin-top: 8vh;
+}
+.listCard{
+    width: 90%;
+    margin: auto;
+    height: 10vh;
+    border: 1px solid;
+    color: white;
+    background-color: rgb(61, 43, 20);
+    border-radius: 10px;
+}
+.listDetail{
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    padding: 0.5rem 2rem;
+    font-size: 1.5rem;
 }
-#historyList li img{
-    width: 40px;
-    margin-right: 1rem;
+.listDetail .fa-pen-to-square{
+    margin-right: 2em;
 }
-#historyList li .fa-pen:hover{
-    color: dodgerblue;
+.fa-pen-to-square, .fa-trash{
+    cursor: pointer;
 }
-#historyList li .fa-trash-can:hover{
-   color: red;
+.listNote{
+    font-size: 1.4rem;
+    margin-left: 2rem;
+}
+
+@media (max-width:1100px) {
+    #container{
+        width: 90%;
+    }
+    
 }
