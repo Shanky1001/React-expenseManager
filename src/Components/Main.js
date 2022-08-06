@@ -197,7 +197,7 @@ const Main = () => {
 
 
     return (
-        <>
+        
             <div id="container">
                 <div id="balanceContainer"><h3> Your Balance</h3>
                     <h3 id="balance"><h6> ₹ </h6><h5>{balance}</h5></h3>
@@ -258,7 +258,7 @@ const Main = () => {
                 </div>
             </div >
 
-        </>
+    
     )
 }
 
