@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import './main.css';
 
-
 var history = [];
+var index = 0;
 const Main = () => {
-    var temp = 0
+    var temp = 0;
+    var tempID;
     var [arr, setArr] = useState([]);
     var [balance, setBalance] = useState(0);
 
@@ -24,7 +25,17 @@ const Main = () => {
         document.querySelector("#formContainer").style = "display:none;"
         document.querySelector("#addMoneyContainer").style = "display:none;"
         document.querySelector("#detailContainer").style = "display:none;"
-        temp=0;
+        // Reseting Everything for add money
+        document.querySelector("#warn").innerHTML = "";
+        document.querySelector("#addValue").innerHTML = "Add";
+        document.querySelector("#moneyAdd").value = "";
+        document.querySelector("#notes").value = "";
+        // Reseting everything for add expense
+        document.querySelector("#warning").innerHTML = "";
+        document.querySelector("#moneyExpense").value = "";
+        document.querySelector("#noteExpense").value = "";
+        document.querySelector("#addExp").innerHTML = "Add Expense";
+        temp = 0;
         arr.forEach((val) => {
             temp += val.rupee;
         });
@@ -33,72 +44,91 @@ const Main = () => {
 
     const addMoney = (e) => {
         e.preventDefault();
-        document.querySelector("#addValue").innerHTML = "Add";
+        const temp = document.querySelector("#addValue").innerHTML;
         const inp = Number(document.querySelector("#moneyAdd").value);
         const notes = document.querySelector("#notes").value;
-        const category = "Added";
         if (inp == "") {
             document.querySelector("#warn").innerHTML = "Enter some money.";
             document.querySelector("#warn").style = "color:red";
         } else {
-            const idn = Math.floor(1 + Math.random() * 200);
-            document.querySelector("#moneyAdd").value = "";
-            document.querySelector("#notes").value = ""
-            var bal = inp + balance;
-            // setBalance(bal);
-            var obj = { "id": idn, "category": category, "rupee": inp, "note": notes };
-            setArr([...arr, obj])
-            history.push(obj);
+            if (temp === "Update") {
+                console.log(history[tempID]);
+                history[tempID].rupee = inp;
+                history[tempID].note = notes;
+                console.log(history);
+                setArr([...history])
+            } else {
+                document.querySelector("#addValue").innerHTML = "Add";
+                const category = "Added";
+                const idn = Math.floor(1 + Math.random() * 200);
+                document.querySelector("#moneyAdd").value = "";
+                document.querySelector("#notes").value = "";
+                var obj = { "index": index, "id": idn, "category": category, "rupee": inp, "note": notes };
+                history.push(obj);
+                index++;
+                setArr([...history])
+            }
         }
-       
+
     }
     const addExpense = (e) => {
         e.preventDefault();
-        document.querySelector("#addExp").innerHTML = "Add Expense";
         const inp = Number(document.querySelector("#moneyExpense").value);
         const category = document.querySelector("#category :checked").value;
         const note = document.querySelector("#noteExpense").value;
-        if (inp == "" || category == -1) {
+        const temp = document.querySelector("#addExp").innerHTML;
+
+        if (inp == "" || category === "-1") {
             document.querySelector("#warning").innerHTML = "Enter both money and category.";
-            document.querySelector("#warning").style = "color:red";
+            document.querySelector("#warning").style = "color:red;font-size:1rem;";
+        } else {
+            if (temp === "Update") {
+                history[tempID].rupee = inp*-1;
+                history[tempID].note = note;
+                history[tempID].category = category;
+                console.log(history);
+                setArr([...history])
+            } else {
+                const idn = Math.floor(1 + Math.random() * 200);
+                var obj = { "index": index, "id": idn, "category": category, "rupee": inp * -1, "note": note };
+                history.push(obj);
+                index++;
+                document.querySelector("#moneyExpense").value = "";
+                document.querySelector("#noteExpense").value = "";
+                setArr([...history])
+            }
         }
-        else {
-            var obj = { "category": category, "rupee": inp * -1, "note": note };
-            setArr([...arr, obj])
-            // setBalance(balance - inp);
-            history.push(obj);
-            document.querySelector("#moneyExpense").value = "";
-            document.querySelector("#noteExpense").value = "";
-        }
-        
+
     }
 
     const operations = (e) => {
         const op = e.target.id;
-        const index = e.target.closest(".listCard").id;
+        const index = Number(e.target.closest(".listCard").id);
+        console.log(index);
         if (op === "edit") {
-            const cat = arr[index].category;
-            if (cat === "Added") {
-                document.querySelector("#addMoneyContainer").style = "display:block;"
-                document.querySelector("#detailContainer").style = "display:none;"
-                document.querySelector("#moneyAdd").value = arr[index].rupee;
-                document.querySelector("#notes").value = arr[index].note;
-                document.querySelector("#addValue").innerHTML = "Update";
-                // setBalance(balance - arr[index].rupee);
-            } else {
-                document.querySelector("#formContainer").style = "display:block;"
-                document.querySelector("#moneyExpense").value = arr[index].rupee;
-                document.querySelector("#noteExpense").value = arr[index].note;
-                document.querySelector("#addExp").innerHTML = "Update";
-                // setBalance(balance + arr[index].rupee);
-            }
-            var temp = arr;
-            temp.splice(index, 1);
-            setArr(temp)
-        } else if (op === "del") {
-            temp = arr;
-            temp.splice(index, 1);
-            setArr([...temp]);
+            history.forEach((val) => {
+                if (val.index === index) {
+                    if (val.category === "Added") {
+                        tempID = arr.indexOf(val);
+                        document.querySelector("#addMoneyContainer").style = "display:block;"
+                        document.querySelector("#detailContainer").style = "display:none;"
+                        document.querySelector("#moneyAdd").value = val.rupee;
+                        document.querySelector("#notes").value = val.note;
+                        document.querySelector("#addValue").innerHTML = "Update";
+                        tempID = index;
+                    } else {
+                        document.querySelector("#formContainer").style = "display:block;"
+                        document.querySelector("#moneyExpense").value = val.rupee * -1;
+                        document.querySelector("#noteExpense").value = val.note;
+                        document.querySelector("#addExp").innerHTML = "Update";
+                        tempID = index;
+                    }
+                }
+            })
+        }
+        else if (op === "del") {
+            e.target.closest(".listCard").remove();
+            history.splice(index, 1);
             details();
         }
     }
@@ -109,35 +139,35 @@ const Main = () => {
         document.querySelector("#addMoneyContainer").style = "display:none;"
         let con = document.querySelector("#display");
         con.innerHTML = "";
-        if (arr.length === 0) {
+        if (history.length === 0) {
             con.innerHTML = "<h1>Nothing to Display </h1>"
         }
         if (e === undefined) {
-            con.innerHTML += arr.map((val, i) => {
-                return `<div class="listCard" id=${i}>
+            con.innerHTML += history.map((val) => {
+                return `<div class="listCard" id=${val.index} >
             <div class="listDetail"><span>₹ ${val.rupee}</span> <span><i class="fa-solid fa-pen-to-square" id="edit"></i><i class="fa-solid fa-trash" id="del" ></i></span></div>
             <div class="listNote">Note: ${val.note} </div>
         </div>`})
         } else {
             const id = e.target.parentNode.id;
             if (id === "history") {
-                con.innerHTML += arr.map((val, i) => {
-                    return `<div class="listCard" id=${i}>
+                con.innerHTML += history.map((val) => {
+                    return `<div class="listCard" id=${val.index}>
                 <div class="listDetail"><span> ${val.category}</span> <span>₹ ${val.rupee} </span><span><i class="fa-solid fa-pen-to-square" id="edit"></i><i class="fa-solid fa-trash" id="del" ></i></span></div>
                 <div class="listNote">Note: ${val.note} </div>
             </div>`})
             }
             if (id === "grocery") {
-                con.innerHTML += arr.map((val, i) => {
-                    return val.category === "Grocery" ? `<div class="listCard" id=${i}>
+                con.innerHTML += history.map((val) => {
+                    return val.category === "Grocery" ? `<div class="listCard" id=${val.index}>
                        <div class="listDetail"><span> ${val.category}</span> <span>₹ ${val.rupee} </span><span><i class="fa-solid fa-pen-to-square" id="edit" ></i><i class="fa-solid fa-trash" id="del" ></i></span></div>
                        <div class="listNote">Note: ${val.note} </div>
                    </div>` : ""
                 })
             }
             if (id === "travelling") {
-                con.innerHTML += arr.map((val, i) => {
-                    return val.category === "Travelling" ? `<div class="listCard" id=${i}>
+                con.innerHTML += history.map((val) => {
+                    return val.category === "Travelling" ? `<div class="listCard" id=${val.index}>
                 <div class="listDetail"><span> ${val.category}</span> <span>₹ ${val.rupee} </span><span><i class="fa-solid fa-pen-to-square" id="edit" ></i><i class="fa-solid fa-trash" id="del"></i></span></div>
                 <div class="listNote">Note: ${val.note} </div>
             </div>` : ""
@@ -145,16 +175,16 @@ const Main = () => {
 
             }
             if (id === "veggies") {
-                con.innerHTML += arr.map((val, i) => {
-                    return val.category === "Veggies" ? `<div class="listCard" id=${i}>
+                con.innerHTML += arr.map((val) => {
+                    return val.category === "Veggies" ? `<div class="listCard" id=${val.index}>
                        <div class="listDetail"><span> ${val.category}</span> <span>₹ ${val.rupee} </span><span><i class="fa-solid fa-pen-to-square" id="edit" ></i><i class="fa-solid fa-trash" id="del" ></i></span></div>
                        <div class="listNote">Note: ${val.note} </div>
                    </div>` : ""
                 })
             }
             if (id === "misc") {
-                con.innerHTML += arr.map((val, i) => {
-                    return val.category === "Misc" ? `<div class="listCard" id=${i}>
+                con.innerHTML += arr.map((val) => {
+                    return val.category === "Misc" ? `<div class="listCard" id=${val.index}>
                 <div class="listDetail"><span> ${val.category}</span> <span>₹ ${val.rupee} </span><span><i class="fa-solid fa-pen-to-square" id="edit" ></i><i class="fa-solid fa-trash" id="del" ></i></span></div>
                 <div class="listNote">Note: ${val.note} </div>
             </div>` : ""
