@@ -49,7 +49,7 @@ const Main = () => {
         const notes = document.querySelector("#notes").value;
         if (inp == "") {
             document.querySelector("#warn").innerHTML = "Enter some money.";
-            document.querySelector("#warn").style = "color:red";
+            document.querySelector("#warn").style = "color:red;font-size:1.5rem";
         } else {
             if (temp === "Update") {
                 console.log(history[tempID]);
@@ -66,7 +66,9 @@ const Main = () => {
                 var obj = { "index": index, "id": idn, "category": category, "rupee": inp, "note": notes };
                 history.push(obj);
                 index++;
-                setArr([...history])
+                setArr([...history]);
+                document.querySelector("#warn").innerHTML = "Your Money is added to your Wallet. ";
+                document.querySelector("#warn").style = "color:green;font-size:1.5rem";
             }
         }
 
@@ -80,10 +82,10 @@ const Main = () => {
 
         if (inp == "" || category === "-1") {
             document.querySelector("#warning").innerHTML = "Enter both money and category.";
-            document.querySelector("#warning").style = "color:red;font-size:1rem;";
+            document.querySelector("#warning").style = "color:red;font-size:1.5rem;";
         } else {
             if (temp === "Update") {
-                history[tempID].rupee = inp*-1;
+                history[tempID].rupee = inp * -1;
                 history[tempID].note = note;
                 history[tempID].category = category;
                 console.log(history);
@@ -95,10 +97,11 @@ const Main = () => {
                 index++;
                 document.querySelector("#moneyExpense").value = "";
                 document.querySelector("#noteExpense").value = "";
+                document.querySelector("#warning").innerHTML = "Expense Added, Kindly go back to see details.";
+                document.querySelector("#warning").style = "color:green;font-size:1.5rem;";
                 setArr([...history])
             }
         }
-
     }
 
     const operations = (e) => {
@@ -197,68 +200,68 @@ const Main = () => {
 
 
     return (
-        
-            <div id="container">
-                <div id="balanceContainer"><h3> Your Balance</h3>
-                    <h3 id="balance"><h6> ₹ </h6><h5>{balance}</h5></h3>
-                </div>
-                <div id="historyContainer" >
 
-                    <div className='cards' id="history" ><h1 onClick={details} > <img src='https://mpng.subpng.com/20201108/wae/transparent-book-icon-history-icon-5fa8a18cbad7d7.9650804216048869247653.jpg' alt='All-history' />
-                        Transaction History</h1></div>
-                    <div className='cards' id="grocery" ><h1 onClick={details}> <img src='https://cdn-icons-png.flaticon.com/512/3724/3724788.png' alt='All-history' />
-                        Groceries</h1></div>
-                    <div className='cards' id="travelling" ><h1 onClick={details}> <img src='https://cdn-icons-png.flaticon.com/512/201/201623.png' alt='Travelling' />  Travelling</h1></div>
-                    <div className='cards' id="veggies" ><h1 onClick={details}><img src='https://www.clipartmax.com/png/middle/361-3612050_clipart-royalty-free-library-vegetable-bowl-icons-png-vegetable-bowl-vector-png.png' alt='Veggies' /> Veggies</h1></div>
-                    <div className='cards' id="misc" ><h1 onClick={details}><img src='https://f.hubspotusercontent30.net/hubfs/3277184/ICONS/ICON-MISC-PersonCheckStatus-GRADIENT.png' alt='Miscellaneous' /> Miscellaneous</h1></div>
+        <div id="container">
+            <div id="balanceContainer"><h3> Your Balance</h3>
+                <h3 id="balance"><h6> ₹ </h6><h5>{balance}</h5></h3>
+            </div>
+            <div id="historyContainer" >
 
-                </div>
-                <div id="add"><h1 id="addExpense" onClick={expenseContainer}> Add Expense</h1><h1 id="addMoney" onClick={moneyContainer}>Add Money </h1></div>
+                <div className='cards' id="history" ><h1 onClick={details} > <img src='https://mpng.subpng.com/20201108/wae/transparent-book-icon-history-icon-5fa8a18cbad7d7.9650804216048869247653.jpg' alt='All-history' />
+                    Transaction History</h1></div>
+                <div className='cards' id="grocery" ><h1 onClick={details}> <img src='https://cdn-icons-png.flaticon.com/512/3724/3724788.png' alt='All-history' />
+                    Groceries</h1></div>
+                <div className='cards' id="travelling" ><h1 onClick={details}> <img src='https://cdn-icons-png.flaticon.com/512/201/201623.png' alt='Travelling' />  Travelling</h1></div>
+                <div className='cards' id="veggies" ><h1 onClick={details}><img src='https://www.clipartmax.com/png/middle/361-3612050_clipart-royalty-free-library-vegetable-bowl-icons-png-vegetable-bowl-vector-png.png' alt='Veggies' /> Veggies</h1></div>
+                <div className='cards' id="misc" ><h1 onClick={details}><img src='https://f.hubspotusercontent30.net/hubfs/3277184/ICONS/ICON-MISC-PersonCheckStatus-GRADIENT.png' alt='Miscellaneous' /> Miscellaneous</h1></div>
 
-                <div id="formContainer">
-                    <i className="fa-solid fa-xmark" onClick={cross} ></i>
-                    <form className="form">
-                        <p style={{ fontSize: "2rem", fontWeight: "800", marginBottom: "5%" }}>Add Detail</p>
-                        <div> <input type="number" placeholder="Enter Money" id='moneyExpense' required /></div>
-                        <div>
-                            <select id='category'>Select the category
-                                <option value="-1" selected disabled>Select the category</option>
-                                <option value="Grocery">Grocery</option>
-                                <option value="Veggies">Veggies</option>
-                                <option value="Travelling">Travelling</option>
-                                <option value="Misc">Miscellaneous</option>
-                            </select>
-                        </div>
-                        <div><input type="text" placeholder="Notes" id='noteExpense' /></div>
+            </div>
+            <div id="add"><h1 id="addExpense" onClick={expenseContainer}> Add Expense</h1><h1 id="addMoney" onClick={moneyContainer}>Add Money </h1></div>
 
-                        <p id="warning"></p>
-                        <button name="submit" className="btn" id="addExp" onClick={addExpense} >Add Detail</button>
-                    </form>
-                </div>
-
-                <div id='addMoneyContainer'>
-                    <i className="fa-solid fa-xmark" onClick={cross} ></i>
-                    <form className="form">
-                        <p style={{ fontSize: "2rem", fontWeight: "800", marginBottom: "5%" }}>Add Money</p>
-                        <div> <input type="number" placeholder="Enter Money" id='moneyAdd' required /></div>
-
-                        <div><input type="text" placeholder="Notes" id='notes' /></div>
-
-                        <p id="warn"></p>
-                        <button name="submit" className="btn" id="addValue" onClick={addMoney}>Add</button>
-                    </form>
-                </div>
-
-                <div id='detailContainer'>
-                    <h1>Details</h1>
-                    <i className="fa-solid fa-xmark" onClick={cross} ></i>
-                    <div id='display' onClick={operations}>
-
+            <div id="formContainer">
+                <i className="fa-solid fa-xmark" onClick={cross} ></i>
+                <form className="form">
+                    <p style={{ fontSize: "2rem", fontWeight: "800", marginBottom: "5%" }}>Add Detail</p>
+                    <div> <input type="number" placeholder="Enter Money" id='moneyExpense' required /></div>
+                    <div>
+                        <select id='category'>Select the category
+                            <option value="-1" selected disabled>Select the category</option>
+                            <option value="Grocery">Grocery</option>
+                            <option value="Veggies">Veggies</option>
+                            <option value="Travelling">Travelling</option>
+                            <option value="Misc">Miscellaneous</option>
+                        </select>
                     </div>
-                </div>
-            </div >
+                    <div><input type="text" placeholder="Notes" id='noteExpense' /></div>
 
-    
+                    <p id="warning"></p>
+                    <button name="submit" className="btn" id="addExp" onClick={addExpense} >Add Detail</button>
+                </form>
+            </div>
+
+            <div id='addMoneyContainer'>
+                <i className="fa-solid fa-xmark" onClick={cross} ></i>
+                <form className="form">
+                    <p style={{ fontSize: "2rem", fontWeight: "800", marginBottom: "5%" }}>Add Money</p>
+                    <div> <input type="number" placeholder="Enter Money" id='moneyAdd' required /></div>
+
+                    <div><input type="text" placeholder="Notes" id='notes' /></div>
+
+                    <p id="warn"></p>
+                    <button name="submit" className="btn" id="addValue" onClick={addMoney}>Add</button>
+                </form>
+            </div>
+
+            <div id='detailContainer'>
+                <h1>Details</h1>
+                <i className="fa-solid fa-xmark" onClick={cross} ></i>
+                <div id='display' onClick={operations}>
+
+                </div>
+            </div>
+        </div >
+
+
     )
 }
 
