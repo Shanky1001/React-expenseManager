@@ -71,8 +71,8 @@ const Main = () => {
                 document.querySelector("#warn").style = "color:green;font-size:1.5rem";
             }
         }
-
     }
+
     const addExpense = (e) => {
         e.preventDefault();
         const inp = Number(document.querySelector("#moneyExpense").value);
